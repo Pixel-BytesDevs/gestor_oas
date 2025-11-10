@@ -19,9 +19,9 @@ class HuggingFaceService:
             Analiza el siguiente contenido educativo y extrae los componentes en formato JSON.
             Por favor, proporciona contenido bien estructurado y claro:
 
-            1. objetivos: lista de 3-5 objetivos de aprendizaje específicos y medibles
-            2. teoria: explicación clara y bien estructurada, organizada en párrafos lógicos
-            3. ejercicios: lista de 2-4 ejercicios prácticos relevantes al contenido
+            1. objetivos: lista de 3-5 objetivos de aprendizaje específicos y medibles acorde al contenido
+            2. teoria: explicación clara y bien estructurada, organizada en párrafos lógicos, y de contener caracteres matemáticos formatearlos adecuadamente
+            3. ejercicios: muestra de los ejercicios mostrados en el contenido, y si no tiene se debe generar ejercicios resolutivos
             4. preguntas_sugeridas: preguntas de evaluación con alternativas
 
             CONTENIDO ORIGINAL:

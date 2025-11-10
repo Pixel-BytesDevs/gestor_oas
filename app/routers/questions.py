@@ -70,7 +70,7 @@ def generate_questions_from_topic(
         num_questions: int = 5,
         db: Session = Depends(get_db)
 ):
-    """Genera preguntas automáticamente para un tópico usando IA"""
+    """Genera preguntas automáticamente para un tópico usando Gemini"""
     # Obtener información del tópico
     topic = db.query(models.Topic).filter(models.Topic.id == topic_id).first()
     if not topic:
@@ -79,7 +79,7 @@ def generate_questions_from_topic(
             detail="Tópico no encontrado"
         )
 
-    # Generar preguntas usando IA
+    # Generar preguntas usando Gemini
     ai_service = AIService()
     generated_questions = ai_service.generate_questions_from_topic(
         topic.nombre, difficulty, num_questions
@@ -89,6 +89,7 @@ def generate_questions_from_topic(
 
     # Guardar preguntas generadas en la base de datos
     for gen_question in generated_questions:
+        # Crear la pregunta en la base de datos
         db_question = models.Question(
             question_text=gen_question["pregunta"],
             id_topic=topic_id,
@@ -113,7 +114,8 @@ def generate_questions_from_topic(
 
     return {
         "message": f"Se generaron {len(created_questions)} preguntas para el tópico '{topic.nombre}'",
-        "questions_created": len(created_questions)
+        "questions_created": len(created_questions),
+        "difficulty": difficulty
     }
 
 
