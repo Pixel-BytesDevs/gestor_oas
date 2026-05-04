@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey, DateTime, BigInteger
+from sqlalchemy import Column, Integer, String, Text, Boolean, ForeignKey, DateTime, BigInteger, JSON
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -44,8 +44,13 @@ class LearningObject(Base):
     idTopic = Column(Integer, ForeignKey("topics.id"))
     title = Column(String(200), nullable=False)
     author = Column(String(100))
+    ge_objective = Column(Text, nullable=True)
+    objectives = Column(JSON, nullable=True)
+    approach = Column(Text, nullable=True)
+    interactive_data = Column(JSON, nullable=True)
     s3_bucket = Column(String(100))
     s3_key = Column(String(500))
+    s3_url = Column(String(1000))
     file_name = Column(String(200))
     file_size = Column(BigInteger)
     file_extension = Column(String(10))
@@ -69,6 +74,7 @@ class LOComponent(Base):
     component_type = Column(String(50))  # 'objetivos', 'teoria', 'ejercicios', 'ejemplos'
     s3_bucket = Column(String(100))
     s3_key = Column(String(500))
+    s3_url = Column(String(1000))
     file_name = Column(String(200))
     file_size = Column(BigInteger)
     file_extension = Column(String(10))

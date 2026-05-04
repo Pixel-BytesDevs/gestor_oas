@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Any
 
 
 class TypeBase(BaseModel):
@@ -94,6 +94,10 @@ class LearningObjectBase(BaseModel):
     idLevel: int
     idStyle: int
     idTopic: int
+    ge_objective: Optional[str] = None  #NUEVO
+    objectives: Optional[Any] = None #NUEVO
+    approach: Optional[str] = None
+    interactive_data: Optional[Any] = None
     estimated_duration: Optional[int] = None
 
 

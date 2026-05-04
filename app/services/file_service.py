@@ -31,7 +31,7 @@ class S3Service:
                 file_name = f"{component_type}{file_extension}"
             elif object_id:
                 # Para archivo original de un objeto
-                s3_key = f"{folder}/{object_id}/original/{clean_name}"
+                s3_key = f"{folder}/{object_id}/{clean_name}"
                 file_name = clean_name
             else:
                 # Para archivos temporales o sin estructura
@@ -91,7 +91,10 @@ class S3Service:
             '.txt': 'text/plain',
             '.jpg': 'image/jpeg',
             '.jpeg': 'image/jpeg',
-            '.png': 'image/png'
+            '.png': 'image/png',
+            '.md': 'text/markdown',
+            '.json': 'application/json',
+            '.mp3': 'audio/mpeg'
         }
         return content_types.get(file_extension.lower(), 'application/octet-stream')
 

@@ -161,6 +161,57 @@ class GeminiService:
 
         return questions
 
+
+    #nuevo
+    def generate_base_read_write_oa(self, topic: str, educational_level: str = "secundaria") -> Dict:
+        """
+        Genera el OA de Lectura/Escritura y la metadata pedagógica del nodo.
+        """
+        try:
+            payload = {
+                "course_topic": topic,
+                "educational_level": educational_level
+            }
+
+            # Asumimos que crearás este nuevo endpoint en tu API de IA local
+            response = requests.post(
+                f"{self.base_url}/prompt/oa/generate-base",
+                json=payload,
+                timeout=self.timeout
+            )
+
+            if response.status_code == 200:
+                result = response.json()
+                return self._adapt_base_oa_response(result)
+            else:
+                print(f"Error en Gemini API: {response.status_code} - {response.text}")
+                return self._create_fallback_base_oa(topic)
+
+        except requests.exceptions.RequestException as e:
+            print(f"Error de conexión con Gemini API: {str(e)}")
+            return self._create_fallback_base_oa(topic)
+        except Exception as e:
+            print(f"Error inesperado en Gemini service: {str(e)}")
+            return self._create_fallback_base_oa(topic)
+
+    def _adapt_base_oa_response(self, gemini_response: Dict) -> Dict:
+        """Adapta la respuesta al esquema de nuestra base de datos"""
+        return {
+            "ge_objective": gemini_response.get("ge_objective", ""),
+            "objectives": gemini_response.get("objectives", {}),
+            "approach": gemini_response.get("approach", ""),
+            "content_markdown": gemini_response.get("content_markdown", "")
+        }
+
+    def _create_fallback_base_oa(self, topic: str) -> Dict:
+        """Fallback en caso de que la IA no responda"""
+        return {
+            "ge_objective": f"Comprender los fundamentos de {topic}",
+            "objectives": {"1": "Identificar el concepto", "2": "Aplicar la teoría"},
+            "approach": "Enfoque teórico estándar",
+            "content_markdown": f"# {topic}\n\nActualmente el contenido detallado para este tema se encuentra en proceso de generación. Por favor, revisa el material de apoyo brindado por el docente."
+        }
+
     def test_connection(self) -> bool:
         """
         Prueba la conexión con la API Gemini
