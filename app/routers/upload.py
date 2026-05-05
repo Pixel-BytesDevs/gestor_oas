@@ -24,7 +24,7 @@ async def upload_learning_object(
     """Endpoint para subir un nuevo objeto de aprendizaje"""
 
     # Validar tipo de archivo
-    allowed_extensions = {'pdf', 'mp4', 'avi', 'mov', 'doc', 'docx', 'ppt', 'pptx', 'txt'}
+    allowed_extensions = {'pdf', 'mp4', 'avi', 'mov', 'doc', 'docx', 'ppt', 'pptx', 'txt','m4a'}
     file_extension = file.filename.split('.')[-1].lower()
 
     if file_extension not in allowed_extensions:
